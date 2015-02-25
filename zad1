@@ -1,0 +1,26 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+double fill_tetrahedron(int);
+
+int main()
+{
+    cout << "Enter the length of the tetrahedron's edge: ";
+    int nEdgeLength;
+    cin >> nEdgeLength;
+
+    cout << fixed << setprecision(2) <<"The tetrahedron can contain: " << fill_tetrahedron(nEdgeLength)/1000.0 << " liters of water." << endl;
+
+    return 0;
+}
+
+double fill_tetrahedron(int num)
+{
+    int nV;
+
+    nV = (1.0/12.0)*(sqrt(2))*(pow(num, 3));
+
+    return nV;
+}
