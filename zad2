@@ -1,0 +1,86 @@
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
+using namespace std;
+
+double fill_tetrahedron(int);
+int tetrahedron_filled(int*, int, int);
+
+int main()
+{
+    cout << "Enter the amount of tetrahedrons to be filled: ";
+    int n;
+    cin >> n;
+    cout << endl;
+
+    int anTetrahedrons[n];
+    for (int i=0; i<n; i++)
+    {
+        cout << "Enter the length of the " << i+1 << " tetrahedron's edge in centimeters: ";
+        cin >> anTetrahedrons[i];
+    }
+
+    cout << endl;
+
+    cout << "Enter the amount of water in litres: ";
+    int nL;
+    cin >> nL;
+
+    for(int i=0; i<n; i++)
+    {
+        int nSmallestIndex = i;
+
+        for(int j = i+1; j<n; j++)
+        {
+            if(anTetrahedrons[j]<anTetrahedrons[nSmallestIndex])
+            {
+                nSmallestIndex=j;
+            }
+        }
+
+        swap(anTetrahedrons[i], anTetrahedrons[nSmallestIndex]);
+    }
+
+    cout << "The amount of water you entered can fill " << tetrahedron_filled(anTetrahedrons, n, nL) << " of your tetrahedrons." << endl;
+
+    return 0;
+}
+
+double fill_tetrahedron(int num)
+{
+    int nV;
+
+    nV = (1.0/12.0)*(sqrt(2))*(pow(num, 3));
+
+    return nV;
+}
+
+int tetrahedron_filled(int* anArr, int nSize, int water)
+{
+    int nFilledCounter=0;
+
+    for(int i=0; i<nSize; i++)
+    {
+        if(water>0)
+        {
+            water -= (fill_tetrahedron(anArr[i])/1000);
+
+            if(water<0)
+            {
+                return nFilledCounter;
+            }
+
+            else
+            {
+                nFilledCounter++;
+            }
+        }
+
+        else
+        {
+            return nFilledCounter;
+        }
+    }
+
+    return nFilledCounter;
+}
